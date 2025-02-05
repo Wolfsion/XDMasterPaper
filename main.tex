@@ -1,0 +1,63 @@
+\documentclass{xdupgthesis}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{longtable}
+\usepackage{subcaption}
+
+\xdusetup{
+    style = { 
+        cjk-font = fandol, 
+        latin-font = gyre,
+        biblatex-option = {doi=false, url = false},
+    },
+    info = {
+        author = {李明一},
+        author* = {Mingyi Li},
+        student-id = {xx15xxxxxxx},
+        department = {计算机科学学院},
+        major = {计算机科学},
+        major* = {Computer Science},
+        sub-major = {人工智能},
+        graduate-type = {硕士},
+        degree = {工学硕士},
+        % degree* = {},
+        degree-type = {学术},
+        bio = {res/profile.tex},
+        supervisor = {张伟}, 
+        supervisor* = {Wei Zhang}, 
+        supv-title = {副教授},
+        supv-title* = {Associate Professor},
+        title = {单一文件如何层次拆分出规范工程的研究},
+        clc = {TN82},
+        secret-level = {公开},
+        submit-date = {2025-05-01},
+        abstract = {chapters/abstract-zh.tex},
+        keywords = {关键词},
+        keywords* = {keyword},
+        abstract* = {chapters/abstract-en.tex},
+        acknowledgements = {chapters/acknowledgements.tex},
+        bib-resource = {reference.bib},
+        statement-scan = {},
+        statement-sign = {},
+        %符号对照表
+        los = {res/notion.tex},
+        %缩略语对照表
+        loa = {res/loa.tex},
+        %附录
+        appendix = {res/appendix.tex},
+    }
+}
+
+\begin{document}
+
+\include{chapters/intro}
+
+\include{chapters/base-know}
+
+\include{chapters/work1}
+
+\include{chapters/work2}
+
+\include{chapters/conclusion}
+
+\end{document}
