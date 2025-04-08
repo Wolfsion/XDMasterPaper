@@ -1,0 +1,14 @@
+*.bbl
+*.xml
+*.gz
+*.aux
+*.bcf
+*.blg
+*.lof
+*.log
+*.lot
+*.out
+*.toc
+
+main.pdf
+board.txt
