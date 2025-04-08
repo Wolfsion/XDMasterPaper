@@ -29,7 +29,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
 \ProvidesExplClass{xdupgthesis}
-  {2023/03/23}{6.1.4.2}
+  {2025/03/18}{6.2.6.2}
   {Xidian University Postgraduate Thesis document class}
 \RequirePackage { xparse, l3keys2e }
 \PassOptionsToPackage { no-math } { fontspec }
@@ -597,7 +597,6 @@
 \str_new:N \l__xdu_domain_str
 \str_new:N \l__xdu_clc_str
 \str_new:N \l__xdu_secret_lv_str
-\str_new:N \l__xdu_secret_year_str
 \str_new:N \l__xdu_submit_date_str
 \str_new:N \l__xdu_statement_scan_str
 \clist_new:N \l__xdu_statement_sign_clist
@@ -631,7 +630,6 @@
     clc .tl_set:N = \l__xdu_clc_str,
     secret-level .choices:nn = { 秘密, 公开 }
       { \tl_set_eq:NN \l__xdu_secret_lv_str \l_keys_choice_tl },
-    secret-year .tl_set:N = \l__xdu_secret_year_str,
     submit-date .tl_set:N = \l__xdu_submit_date_str,
     statement-scan .tl_set:N = \l__xdu_statement_scan_str,
     statement-sign .clist_set:N = \l__xdu_statement_sign_clist,
@@ -663,7 +661,6 @@
     info / domain                       = { },
     info / clc                          = { },
     info / secret-level                 = 公开,
-    info / secret-year                  = { },
     info / submit-date                  = { },
     info / statement-scan               = { },
     info / statement-sign               = { },
@@ -2248,8 +2245,8 @@
 \cs_new:Npn \__xdu_statement:
   {
     \vbox:n { }
-    \skip_vertical:n { -7.5pt }
-    \vbox_to_ht:nn { 60pt }
+    \skip_vertical:n { -8.5pt }
+    \vbox_to_ht:nn { 59.5pt }
       {
         \rmfamily \zihao { 4 } \bfseries \centering
         \dim_set:Nn \baselineskip { 20pt }
@@ -2259,6 +2256,7 @@
     \vbox_to_ht:nn { 120pt }
       {
         \rmfamily \zihao { -4 }
+        \xeCJKsetup { CJKglue = { \hskip 0pt } }
         \dim_set:Nn \parindent { 2em }
         \dim_set:Nn \baselineskip { 20pt }
         秉承学校严谨的学风和优良的科学道德，本人声明所呈交的论文是我个人在导师指
@@ -2272,7 +2270,7 @@
       }
     \clist_if_empty:NT \l__xdu_statement_sign_clist
       { \skip_vertical:n { 20pt } }
-    \vbox_to_ht:nn { 175pt }
+    \vbox_to_ht:nn { 155pt }
       {
         \rmfamily \zihao { -4 }
         \dim_set:Nn \parindent { 2em }
@@ -2298,26 +2296,23 @@
         西安电子科技大学\\
         关于论文使用授权的说明
       }
-    \vbox_to_ht:nn { 120pt }
+    \vbox_to_ht:nn { 160pt }
       {
         \rmfamily \zihao { -4 }
+        \xeCJKsetup { CJKglue = { \hskip 0pt } }
         \dim_set:Nn \parindent { 2em }
         \dim_set:Nn \baselineskip { 20pt }
         本人完全了解西安电子科技大学有关保留和使用学位论文的规定，即：研究生在校
-        攻读学位期间论文工作的知识产权属于西安电子科技大学。学校有权保留送交论文
-        的复印件，允许查阅、借阅论文；学校可以公布论文的全部或部分内容，允许采用
-        影印、缩印或其它复制手段保存论文。同时本人保证，结合学位论文研究成果完成
-        的论文、发明专利等成果，署名单位为西安电子科技大学。
+        攻读学位期间论文工作的知识产权属于西安电子科技大学。学校有权保留并向国家
+        有关部门或机构送交学位论文的复印件和电子版，以学术交流为目的赠送和交换学
+        位论文，允许学位论文被查阅、借阅和复印，将学位论文的全部或部分内容编入有
+        关数据库进行检索和提供相应阅览服务；允许采用影印、缩印或其它复制手段保存
+        学位论文。同时本人保证，结合学位论文研究成果完成的论文、发明专利等成果，
+        署名单位为西安电子科技大学。
         \par
-        保密的学位论文在
-        \str_if_eq:NNTF \l__xdu_secret_lv_str { 秘密 }
-          {
-            \str_if_empty:NTF \l__xdu_secret_year_str
-              { \__xdu_uline:n { \skip_horizontal:n { 1.5em } } }
-              { \__xdu_uline:n { \enskip \l__xdu_secret_year_str \enskip } }
-          }
-          { \__xdu_uline:n { \skip_horizontal:n { 1.5em } } }
-        年解密后适用本授权书。
+        本人保证遵守上述规定。
+        \par
+        （保密的论文在解密后遵守此规定）
         \vfil
       }
     \clist_if_empty:NT \l__xdu_statement_sign_clist
@@ -2490,7 +2485,12 @@
       { \__xdu_lang_switch:nn { 符号对照表 } { List~of~Symbols } }
     \__xdu_lang_switch:nn { } { \__xdu_add_zh_toc:nn { chapter } { 符号对照表 } }
     \bool_if:NTF \l__xdu_customize_los_bool
-      { \file_if_exist_input:n { \l__xdu_los_str } }
+      {
+        \group_begin:
+        \zihao { -4 }
+        \file_if_exist_input:n { \l__xdu_los_str }
+        \group_end:
+      }
       {
         \tl_new:N \l__xdu_los_head_tl
         \__xdu_lang_switch:nn
@@ -2541,7 +2541,12 @@
       { \__xdu_lang_switch:nn { 缩略语对照表 } { List~of~Abbreviations } }
     \__xdu_lang_switch:nn { } { \__xdu_add_zh_toc:nn { chapter } { 缩略语对照表 } }
     \bool_if:NTF \l__xdu_customize_loa_bool
-      { \file_if_exist_input:n { \l__xdu_loa_str } }
+      {
+        \group_begin:
+        \zihao { -4 }
+        \file_if_exist_input:n { \l__xdu_loa_str }
+        \group_end:
+      }
       {
         \tl_new:N \l__xdu_loa_head_tl
         \__xdu_lang_switch:nn
@@ -2802,6 +2807,14 @@
           \dim_set:Nn \parindent { 2 \ccwd }
           \rmfamily \zihao { -4 }
           \dim_set:Nn \baselineskip { 20pt }
+          \ctexset
+            {
+                section    / number = { \arabic { section } . },
+                section    / format = { \rmfamily \zihao { -3 } \bfseries \raggedright },
+                subsection / number = { \arabic { section } . \arabic { subsection } },
+                subsection / format = { \rmfamily \zihao { 4 } \bfseries \raggedright }
+            }
+          \setcounter { section } { 0 }
           \file_if_exist_input:n { \l__xdu_ack_tl }
         \group_end:
       }
@@ -2824,6 +2837,7 @@
             }
           \addtocontents { toc } { \protect \setcounter { tocdepth } { 0 } }
           \setcounter { tocdepth } { 0 }
+          \setcounter { section } { 0 }
           \file_if_exist_input:n { \l__xdu_bio_str }
           \addtocontents { toc } { \protect \setcounter { tocdepth } { 2 } }
           \setcounter { tocdepth } { 2 }

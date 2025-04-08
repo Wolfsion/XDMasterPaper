@@ -7,8 +7,10 @@
 
 3. tex文件内容进行自定义替换
 
+4. 编译论文前，到源模板库中获取最新的xdupgthesis.cls然后覆盖本库的同名文件
+
 ## 参考链接
-+ 源自模板，出现bug可参考：https://github.com/note286/xduts
++ 源模板库，出现bug可参考：https://github.com/note286/xduts
 + 常用实例排版：https://github.com/note286/xduts/discussions/40
 
 ## 本地编译（使用Visual Studio Code）
